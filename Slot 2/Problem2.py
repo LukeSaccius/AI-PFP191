@@ -16,12 +16,15 @@ fourth_system_grading_scale = [
 # Example usage with input validation
 while True:
     try:
-        grade_input = input("Enter the grade of a subject in decimal system: ")
+        grade_input = input("Enter the grade of a subject in decimal system (0 to 10): ")
         grade = float(grade_input)
-        alpha_grade = get_grade(grade, alphabetic_grading_scale)
-        system4_grade = get_grade(grade, fourth_system_grading_scale)
-        print(f"Corresponding alphabetic grade: {alpha_grade}")
-        print(f"Corresponding 4th system grade: {system4_grade}")
-        break
+        if 0 <= grade <= 10:
+            alpha_grade = get_grade(grade, alphabetic_grading_scale)
+            system4_grade = get_grade(grade, fourth_system_grading_scale)
+            print(f"Corresponding alphabetic grade: {alpha_grade}")
+            print(f"Corresponding 4th system grade: {system4_grade}")
+            break
+        else:
+            print("Grade must be between 0 and 10.")
     except ValueError:
         print("Please enter a valid decimal number for the grade.")
