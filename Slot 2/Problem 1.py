@@ -1,18 +1,15 @@
-# Find the closest number to the average
-arr = list(map(int, input("Enter the numbers separated by space: ").split()))
+def find_closest_to_average(arr):
+    avg = sum(arr) / len(arr)
+    closest = min(arr, key=lambda x: (abs(x - avg), x))
+    return closest, arr.index(closest), avg
 
-# Find the average value among the numbers
-avg = sum(arr) / len(arr)
-print("The average value is:", avg)
-
-# Find the first number in the array that is closest to the average
-min_diff = float('inf')
-min_index = -1
-for i in range(len(arr)):
-    diff = abs(arr[i] - avg)
-    if diff < min_diff:
-        min_diff = diff
-        min_index = i
-
-# Print the number closest to the average
-print(f"The number closest to the average is {arr[min_index]} at index {min_index}.")
+# Example usage with input validation:
+while True:
+    try:
+        numbers = list(map(int, input("Enter the numbers separated by space: ").split()))
+        closest_number, closest_index, average = find_closest_to_average(numbers)
+        print(f"Average of the array: {average}")
+        print(f"Element closest to the average: {closest_number} at index {closest_index}")
+        break
+    except ValueError:
+        print("Please enter only numbers separated by spaces.")
