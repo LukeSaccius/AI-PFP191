@@ -26,7 +26,7 @@ fourth_system_grading_scale = [
 
 # Example usage with input validation
 while True:
-    try:
+    try:    
         grade_input = input("Enter the grade of a subject in decimal system (0 to 10): ")
         grade = float(grade_input)
         if 0 <= grade <= 10:
