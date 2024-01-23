@@ -2,7 +2,7 @@
 def func1(*args):
     print("Printing values")
     for x in args:
-        print(arg)
+        print(x)
 
 # Function that returns multiple values (assumed to be the sum and the difference of the inputs).
 def calculation(a, b):
