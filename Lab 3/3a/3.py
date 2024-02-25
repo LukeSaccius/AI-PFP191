@@ -26,7 +26,7 @@ str7 = "PyNaTive"
 str8 = "P@yn2at&t%%fds$fda^^&%^$ive"
 
 # Outputs for each task
-print(f"Task 1: {middle_chars(str1)}, {middle_chars(str2)}")
+print(f"Task 1: Middle four chars are: {middle_chars(str1)}, {middle_chars(str2)}")
 print(f"Task 2: {insert_middle(str3, str4)}")
 print(f"Task 3: {combine_chars(str5, str6)}")
 print(f"Task 4: {sort_chars(str7)}")
