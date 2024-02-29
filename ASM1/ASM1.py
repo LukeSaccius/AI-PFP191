@@ -1,89 +1,183 @@
-class Pupil:
-    def __init__(self, id, name, age, gender, form):
-        self.id = id
+class PupilRecord:
+    def __init__(self, roll_number, name, marks):
+        self.roll_number = roll_number
         self.name = name
-        self.age = age
-        self.gender = gender
-        self.form = form
+        self.marks = marks
 
-    def __str__(self):
-        return f"{self.id}\t{self.name}\t{self.age}\t{self.gender}\t{self.form}"
+def display_main_menu():
+    print("1. REPORT MENU")
+    print("2. ADMIN MENU")
+    print("3. EXIT")
+############################################################ ADMIN MENU ############################################################################
+def display_admin_menu():
+    print("1. Create pupil record")
+    print("2. Display all pupil records")
+    print("3. Search pupil record")
+    print("4. Modify pupil record")
+    print("5. Delete pupil record")
+    print("6. Back to main menu")
+    
+def create_pupil_record():
+    while True:
+        roll_number = input("Enter roll number: ")
+        name = input("Enter name: ")
+        marks = {
+            'English': int(input("Enter Marks in English: ")),
+            'Math': int(input("Enter Marks in Maths: ")),
+            'Physics': int(input("Enter Marks in Physics: ")),
+            'Chemistry': int(input("Enter Marks in Chemistry: ")),
+            'CS': int(input("Enter Marks in CS: "))
+        }
+        pupils[roll_number] = PupilRecord(roll_number, name, marks)
+        more_records = input("Want to enter more record (y/n)?: ").lower()
+        if more_records != 'y':
+            break
 
-class PupilCheckingSystem:
-    def __init__(self):
-        self.pupils = []
+def display_all_pupil_records():
+    for roll_number, pupil in pupils.items():
+        print("PUPIL DETAILS..")
+        print(f"Roll Number: {pupil.roll_number}")
+        print(f"Name: {pupil.name}")
+        print(f"English: {pupil.marks['English']}")
+        print(f"Maths: {pupil.marks['Math']}")
+        print(f"Physics: {pupil.marks['Physics']}")
+        print(f"Chemistry: {pupil.marks['Chemistry']}")
+        print(f"CS: {pupil.marks['CS']}")
+        print()  # Print a blank line between records for better readability
 
-    def add_pupil(self):
-        id = input("Enter pupil ID: ")
-        name = input("Enter pupil name: ")
-        age = input("Enter pupil age: ")
-        gender = input("Enter pupil gender: ")
-        form = input("Enter pupil form: ")
-        new_pupil = Pupil(id, name, age, gender, form)
-        self.pupils.append(new_pupil)
-        print("Pupil added successfully!")
 
-    def display_pupils(self):
-        print("ID\tName\tAge\tGender\tForm")
-        for pupil in self.pupils:
-            print(pupil)
+def search_pupil_record():
+    roll_number = input("Enter the roll number you want to search: ")
+    pupil = pupils.get(roll_number)
+    if pupil:
+        print("PUPIL DETAILS..")
+        print(f"Roll Number: {pupil.roll_number}")
+        print(f"Name: {pupil.name}")
+        print(f"English: {pupil.marks['English']}")
+        print(f"Maths: {pupil.marks['Math']}")
+        print(f"Physics: {pupil.marks['Physics']}")
+        print(f"Chemistry: {pupil.marks['Chemistry']}")
+        print(f"CS: {pupil.marks['CS']}")
+    else:
+        print("Pupil record not found.")
 
-    def search_pupil(self):
-        id = input("Enter pupil ID to search: ")
-        for pupil in self.pupils:
-            if pupil.id == id:
-                print("Pupil found:")
-                print(pupil)
-                return
-        print("Pupil not found.")
+def modify_pupil_record():
+    roll_number = input("Enter roll number: ")
+    pupil = pupils.get(roll_number)
+    if not pupil:
+        print("Pupil record not found.")
+        return
+    
+    print("MODIFY RECORD")
+    print(f"Roll Number: {roll_number}")
+    print(f"Name: {pupil.name}")
+    
+    if input("Wants to edit(y/n)?: ").lower() == 'y':
+        pupil.name = input("Enter the name: ")
+    
+    for subject in ['English', 'Maths', 'Physics', 'Chemistry', 'CS']:
+        if input(f"Wants to edit {subject} marks (y/n)?: ").lower() == 'y':
+            pupil.marks[subject] = int(input(f"Enter {subject} marks: "))
+    
+    print("Record updated.\n")  # Print a blank line after updating the record
+    
+    print("PUPIL DETAILS..")
+    print(f"Roll Number: {pupil.roll_number}")
+    print(f"Name: {pupil.name}")
+    print(f"English: {pupil.marks['English']}")
+    print(f"Maths: {pupil.marks['Math']}")
+    print(f"Physics: {pupil.marks['Physics']}")
+    print(f"Chemistry: {pupil.marks['Chemistry']}")
+    print(f"CS: {pupil.marks['CS']}")
 
-    def modify_pupil(self):
-        id = input("Enter pupil ID to modify: ")
-        for pupil in self.pupils:
-            if pupil.id == id:
-                pupil.name = input("Enter new pupil name: ")
-                pupil.age = input("Enter new pupil age: ")
-                pupil.gender = input("Enter new pupil gender: ")
-                pupil.form = input("Enter new pupil form: ")
-                print("Pupil record updated successfully!")
-                return
-        print("Pupil not found.")
-
-    def delete_pupil(self):
-        id = input("Enter pupil ID to delete: ")
-        for i, pupil in enumerate(self.pupils):
-            if pupil.id == id:
-                del self.pupils[i]
-                print("Pupil record deleted successfully!")
-                return
-        print("Pupil not found.")
-
-    def run(self):
-        while True:
-            print("\n1. Add pupil")
-            print("2. Display all pupils")
-            print("3. Search pupil record")
-            print("4. Modify pupil record")
-            print("5. Delete pupil record")
-            print("6. Exit")
-            choice = input("Enter your choice: ")
-
-            if choice == '1':
-                self.add_pupil()
-            elif choice == '2':
-                self.display_pupils()
-            elif choice == '3':
-                self.search_pupil()
-            elif choice == '4':
-                self.modify_pupil()
-            elif choice == '5':
-                self.delete_pupil()
-            elif choice == '6':
-                print("Exiting the system.")
+def delete_pupil_record():
+    roll_number = input("Enter roll number: ")
+    pupil = pupils.get(roll_number)
+    if pupil:
+        print("PUPIL DETAILS..")
+        print(f"Roll Number: {pupil.roll_number}")
+        print(f"Name: {pupil.name}")
+        print(f"English: {pupil.marks['English']}")
+        print(f"Maths: {pupil.marks['Math']}")
+        print(f"Physics: {pupil.marks['Physics']}")
+        print(f"Chemistry: {pupil.marks['Chemistry']}")
+        print(f"CS: {pupil.marks['CS']}")
+        
+        del pupils[roll_number]
+        print("RECORD found and deleted")
+    else:
+        print("Record not found.")
+        
+def admin_menu():
+    while True:
+            display_admin_menu()
+            admin_choice = input("Enter choice (1-6): ")
+            if admin_choice == '1':
+                create_pupil_record()
+            elif admin_choice == '2':
+                display_all_pupil_records()
+            elif admin_choice == '3':
+                search_pupil_record()
+            elif admin_choice == '4':
+                modify_pupil_record()
+            elif admin_choice == '5':
+                delete_pupil_record()
+            elif admin_choice == '6':
                 break
             else:
                 print("Invalid choice. Please try again.")
+############################################# REPORT MENU ###############################################
+def display_report_menu():
+    print("REPORT MENU")
+    print("1. Class result")
+    print("2. Pupil report card")
+    print("3. Back to main menu")
 
-# To start the system
-system = PupilCheckingSystem()
-system.run()
+def class_result():
+    print("RollNo Name           English Maths Physics Chemistry CS")
+    for roll_number, pupil in pupils.items():
+        marks = pupil.marks
+        print(f"{pupil.roll_number:<6} {pupil.name:<15} {marks['English']:<8} {marks['Math']:<5} {marks['Physics']:<8} {marks['Chemistry']:<9} {marks['CS']}")
+
+def pupil_report_card():
+    roll_number = input("Enter the roll number you want to search: ")
+    pupil = pupils.get(roll_number)
+    if pupil:
+        print("PUPIL DETAILS..")
+        print(f"Roll Number: {pupil.roll_number}")
+        print(f"Name: {pupil.name}")
+        print(f"English: {pupil.marks['English']}")
+        print(f"Maths: {pupil.marks['Math']}")
+        print(f"Physics: {pupil.marks['Physics']}")
+        print(f"Chemistry: {pupil.marks['Chemistry']}")
+        print(f"CS: {pupil.marks['CS']}")
+    else:
+        print("Pupil record not found.")
+
+def report():
+    while True:
+        display_report_menu()
+        choice = input("Enter choice (1-3): ")
+        if choice == '1':
+            class_result()
+        elif choice == '2':
+            pupil_report_card()
+        elif choice == '3':
+            break
+        else:
+            print("Invalid choice. Please try again.")
+#########################################################################################################
+
+pupils = {}
+while True:
+    display_main_menu()
+    choice = input("Enter choice (1-3): ")
+    if choice == '1':
+        report()
+    elif choice == '2':
+        admin_menu()
+    elif choice == '3':
+        print("Exiting the system.")
+        break
+    else:
+        print("Invalid choice. Please try again.")
