@@ -8,6 +8,20 @@ def display_main_menu():
     print("1. REPORT MENU")
     print("2. ADMIN MENU")
     print("3. EXIT")
+    
+def input_integer(message):
+    while True:
+        try:
+            value = int(input(message))
+            if 0 <= value <= 10:
+                return value
+            else:
+                print("Invalid input. Please enter a value between 0 and 10.")
+        except ValueError:
+            print("Invalid input. Please enter a numeric value.")
+
+# The rest of your code remains the same
+
 ############################################################ ADMIN MENU ############################################################################
 def display_admin_menu():
     print("1. Create pupil record")
@@ -20,18 +34,28 @@ def display_admin_menu():
 def create_pupil_record():
     while True:
         roll_number = input("Enter roll number: ")
+        # Check if the roll number already exists
+        if roll_number in pupils:
+            print("This roll number already exists. Please enter a different roll number.")
+            continue  # Skip the rest of the loop and prompt for the roll number again
+        
         name = input("Enter name: ")
         marks = {
-            'English': int(input("Enter Marks in English: ")),
-            'Math': int(input("Enter Marks in Maths: ")),
-            'Physics': int(input("Enter Marks in Physics: ")),
-            'Chemistry': int(input("Enter Marks in Chemistry: ")),
-            'CS': int(input("Enter Marks in CS: "))
+            'English': input_integer("Enter Marks in English: "),
+            'Math': input_integer("Enter Marks in Maths: "),
+            'Physics': input_integer("Enter Marks in Physics: "),
+            'Chemistry': input_integer("Enter Marks in Chemistry: "),
+            'CS': input_integer("Enter Marks in CS: ")
         }
         pupils[roll_number] = PupilRecord(roll_number, name, marks)
         more_records = input("Want to enter more record (y/n)?: ").lower()
-        if more_records != 'y':
+        if more_records == 'n':
             break
+        elif more_records == 'y':
+            continue
+        else:
+            print("Invalid Choice! Please type again")
+
 
 def display_all_pupil_records():
     for roll_number, pupil in pupils.items():
